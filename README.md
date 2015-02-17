@@ -1,4 +1,4 @@
-# Dragonfly SMS Web API Wrapper for PHP
+# Dragonfly SMS API Wrapper for PHP
 
 ### Prerequisites
 
