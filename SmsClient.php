@@ -112,22 +112,23 @@ namespace MScience{
 
             foreach ($inputParts as $singleResult)
             {
-                $resultParts = explode('-',$singleResult);
-                
-                if (strtoupper($resultParts[0]) == "OK")
+                $resultParts = explode(',',$singleResult);
+                if (strpos($resultParts[0], 'OK') !== false)
                 {
-                    $successParts = explode(',',$resultParts[1]);
+                    $successParts = explode(',',$resultParts[0]);
+                    $statusIdPart = explode('-',$successParts[0]);
                     
-                    $messageId = (int)$successParts[0];
-                    $messageBalance = (int)$successParts[1];
-                    $pendingMessages = (int)$successParts[2];
-                    $surchargeBalance = (float)$successParts[3];
+                    $messageId = (int)$statusIdPart[1];
+                    $messageBalance = (int)$resultParts[1];
+                    $pendingMessages = (int)$resultParts[2];
+                    $surchargeBalance = (float)$resultParts[3];
 
                     array_push($results, new SendResult($resultParts[0], $messageId, $messageBalance, $pendingMessages, $surchargeBalance));
                 }
                 else
                 {
-                    results.Add(new SendResult($resultParts[0], 0, 0, 0, 0, $resultParts[1]));
+                    $errorCode = explode('-',$resultParts);
+                    $results[] = (new SendResult($resultParts[0], 0, 0, 0, 0, $errorCode[1]));
                 }
 
             }
